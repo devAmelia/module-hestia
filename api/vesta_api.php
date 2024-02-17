@@ -88,7 +88,6 @@ class VestaApi
             'arg4' => $params['package_name'],
             'arg5' => $params['first_name'],
             'arg6' => $params['last_name'],
-            'arg7' => $params['email'],
         ];
         $response = $this->apiRequest('v-add-user', $params);
 
@@ -111,22 +110,42 @@ class VestaApi
      */
     public function addDomain($username, $domain)
     {
-        $params = [
+        $postvars = array(
+            'user' => $this->user_name,
+            'password' => $this->password,
+            'cmd' => 'v-add-domain',
             'arg1' => $username,
             'arg2' => $domain,
-        ];
-        $response = $this->apiRequest('v-add-domain', $params);
-
-        $return_response = [
-            'status' => 'false',
-            'response' => $response
-        ];
-
-        if ($response === 'OK') {
-            $return_response['status'] = 'true';
+        );
+    
+        $postdata = http_build_query($postvars);
+    
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://' . $this->host_name . ':8083/api/');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $postdata);
+        $answer = curl_exec($curl);
+        curl_close($curl);
+    
+        
+        if ($answer === 'OK') {
+            return ['status' => 'true', 'response' => 'Domain has been successfully created'];
+        } else {
+            return ['status' => 'false', 'response' => $answer];
         }
-        return $return_response;
     }
+    
+    
+    
+    
+
+    
+    
+    
+    
 
     /**
      * Enables SSH for a specific account
