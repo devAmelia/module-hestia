@@ -1,11 +1,11 @@
 {
-    "version": "1.9.1",
-    "name": "Vesta.name",
-    "description": "Vesta.description",
+    "version": "1.0.0",
+    "name": "HestiaCP",
+    "description": "HestiaCP is an open-source web control panel that is considered to be a great alternative to cPanel. Not only does its security and frequent updates match in quality with that of cPanel, it's also completely free.",
     "authors": [
         {
-            "name": "@devAmelia",
-            "url": "http://www.blesta.com"
+            "name": "@devAmelia, Phillips Data, Inc.",
+            "url": "https://github.com/devAmelia"
         }
     ],
     "package": {
